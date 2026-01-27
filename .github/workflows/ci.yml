@@ -144,7 +144,7 @@ jobs:
             remote_monitoring: true
             collect_gc: true   
 
-      - name: Set up JDK version
+      - name: Set up JDK1 version
         uses: actions/setup-java@v4
         with:
           java-version-file: .github/.java-version
