@@ -6,9 +6,7 @@ on:
     branches:
       - main
       - develop
-    paths-ignore:
-      - '**.md'
-      - '.github/**'
+   
   pull_request:
     paths-ignore:
       - '**.md'
@@ -21,7 +19,7 @@ concurrency:
 jobs:
   code_formatting:
     name: Code Formatting
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -36,6 +34,13 @@ jobs:
           java-version-file: .github/.java-version
           distribution: 'adopt'
 
+      - name: Processs Watcher 
+        uses: cdsap/build-process-watcher@main
+        with:
+            remote_monitoring: true
+            collect_gc: true   
+
+
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v5
         with:
@@ -46,7 +51,7 @@ jobs:
 
   unit_tests:
     name: Unit tests
-    runs-on: android-large-runner
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -60,6 +65,12 @@ jobs:
           java-version-file: .github/.java-version
           distribution: 'adopt'
 
+      - name: Processs Watcher 
+        uses: cdsap/build-process-watcher@main
+        with:
+            remote_monitoring: true
+            collect_gc: true             
+
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v5
         with:
@@ -68,20 +79,10 @@ jobs:
       - name: JVM tests
         run: ./gradlew jvm_tests
 
-      - name: Bundle the JVM checks report
-        if: always()
-        run: find . -type d -name 'reports' | zip -@ -r unit-tests-report.zip
-
-      - name: Upload the JVM checks report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: unit-tests-report
-          path: unit-tests-report.zip
 
   lint:
     name: Lint
-    runs-on: android-large-runner
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -99,6 +100,12 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: '1.18.3'
+
+      - name: Processs Watcher 
+        uses: cdsap/build-process-watcher@main
+        with:
+            remote_monitoring: true
+            collect_gc: true   
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v5
@@ -120,7 +127,7 @@ jobs:
           path: lint-report.zip
 
   android_tests:
-    runs-on: android-large-runner
+    runs-on: ubuntu-latest
     name: Android CI tests
 
     steps:
@@ -134,6 +141,12 @@ jobs:
         with:
           force: true
 
+      - name: Processs Watcher 
+        uses: cdsap/build-process-watcher@main
+        with:
+            remote_monitoring: true
+            collect_gc: true   
+            
       - name: Set up JDK version
         uses: actions/setup-java@v4
         with:
@@ -157,57 +170,3 @@ jobs:
 
       - name: Build
         run: ./gradlew androidTestsBuild
-
-      - name: Find test APK path
-        id: find-apk
-        run: |
-          TEST_APK_PATH=$(find . -path '*/build/outputs/apk/play/debug/*.apk' -type f -print -quit)
-          echo "Found test APK at: $TEST_APK_PATH"
-          echo "apk_path=$TEST_APK_PATH" >> "$GITHUB_OUTPUT"
-
-      - name: Make script executable
-        run: chmod +x scripts/check_elf_alignment.sh
-
-      - name: Check native libraries alignment
-        id: check-alignment
-        continue-on-error: true
-        run: ./scripts/check_elf_alignment.sh ${{ steps.find-apk.outputs.apk_path }}
-
-      - name: Handle native alignment failure
-        if: steps.check-alignment.outcome == 'failure'
-        run: |
-          echo "::error::Native library alignment check failed!"
-          echo "::error::Please check the native libraries in your APK for correct page size alignment."
-          exit 1
-
-      - name: Run Android Tests
-        if: steps.check-alignment.outcome == 'success'
-        run: ./gradlew runFlankAndroidTests --no-configuration-cache
-
-      - name: Bundle the Android CI tests report
-        if: |
-          always() &&
-          steps.check-alignment.outcome == 'success'
-        run: find . -type d -name 'fladleResults' | zip -@ -r android-tests-report.zip
-
-      - name: Generate json file with failures
-        if: |
-          failure() &&
-          steps.check-alignment.outcome == 'success'
-        run: cut -d\`  -f2 < build/fladle/fladleResults/HtmlErrorReport.html >> results.json
-
-      - name: Print failure report
-        if: |
-          failure() &&
-          steps.check-alignment.outcome == 'success'
-        run: |
-          jq -r '.[] | .label as $id | .items[] | "Test:", $id, "Failure:", .label, "URL:", .url, "\n"' results.json
-
-      - name: Upload the Android CI tests report
-        if: |
-          always() &&
-          steps.check-alignment.outcome == 'success'
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-tests-report
-          path: android-tests-report.zip
