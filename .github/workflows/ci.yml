@@ -171,7 +171,7 @@ jobs:
           DEVELOCITY_ACCESS_KEY: ${{ secrets.DV_ACCESS_KEY }}
 
 
-release:
+  release:
     runs-on: ubuntu-latest
     name: Android CI tests
 
