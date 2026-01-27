@@ -205,7 +205,7 @@ jobs:
 
    
       - name: Build
-        run: ./gradlew :app:assemblePlayRelease 
+        run: ./gradlew :app:assemblePlay
         env:
           DEVELOCITY_ACCESS_KEY: ${{ secrets.DV_ACCESS_KEY }}
 
