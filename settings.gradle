@@ -1,5 +1,6 @@
 plugins {
     id("de.fayard.refreshVersions") version "0.60.5"
+    id("com.gradle.develocity") version "4.3"
 }
 
 rootDir.eachFile(groovy.io.FileType.DIRECTORIES) { File parent ->
@@ -38,8 +39,14 @@ rootProject.children.each { subproject ->
         subproject.buildFileName = "${subproject.name}-build.gradle"
     }
 }
-
-
+develocity {
+    server = "https://ge.solutions-team.gradle.com/"
+    allowUntrustedServer = true
+    buildScan {
+        uploadInBackground.set(false)
+    }
+}  
+rootProject.name = "testInaki"
 buildCache {
 
     def getFile = { dir, filename ->
