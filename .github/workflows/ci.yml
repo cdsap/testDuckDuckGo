@@ -169,3 +169,43 @@ jobs:
         run: ./gradlew androidTestsBuild
         env:
           DEVELOCITY_ACCESS_KEY: ${{ secrets.DV_ACCESS_KEY }}
+
+
+release:
+    runs-on: ubuntu-latest
+    name: Android CI tests
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup jq
+        uses: dcarbone/install-jq-action@v1.0.1
+        with:
+          force: true
+
+      - name: Processs Watcher 
+        uses: cdsap/build-process-watcher@main
+        with:
+            remote_monitoring: true
+            collect_gc: true   
+
+      - name: Set up JDK1 version
+        uses: actions/setup-java@v4
+        with:
+          java-version-file: .github/.java-version
+          distribution: 'adopt'
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.18.3'
+
+   
+      - name: Build
+        run: ./gradlew :app:assembleProdRelease :app:bundleProdRelease 
+        env:
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.DV_ACCESS_KEY }}
+
