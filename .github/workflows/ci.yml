@@ -43,7 +43,7 @@ jobs:
       - name: Run Code Formatting Checks
         run: ./gradlew spotlessCheck
         env:
-          DEVELOCITY_ACCESS_KEY: ${{ secrents.DV_ACCESS_KEY }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.DV_ACCESS_KEY }}
 
   unit_tests:
     name: Unit tests
@@ -71,7 +71,7 @@ jobs:
       - name: JVM tests
         run: ./gradlew jvm_tests
         env:
-          DEVELOCITY_ACCESS_KEY: ${{ secrents.DV_ACCESS_KEY }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.DV_ACCESS_KEY }}
 
 
   lint:
@@ -109,7 +109,7 @@ jobs:
       - name: Lint
         run: ./gradlew lint
         env:
-          DEVELOCITY_ACCESS_KEY: ${{ secrents.DV_ACCESS_KEY }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.DV_ACCESS_KEY }}
         
 
       - name: Bundle the lint report
@@ -168,4 +168,4 @@ jobs:
       - name: Build
         run: ./gradlew androidTestsBuild
         env:
-          DEVELOCITY_ACCESS_KEY: ${{ secrents.DV_ACCESS_KEY }}
+          DEVELOCITY_ACCESS_KEY: ${{ secrets.DV_ACCESS_KEY }}
