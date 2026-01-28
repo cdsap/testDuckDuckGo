@@ -69,7 +69,7 @@ tasks.register('jvm_checks') {
 }
 
 tasks.register('jvm_tests') {
-    dependsOn 'testDebugUnitTest'
+    dependsOn 'testDebugUnitTest', 'testReleaseUnitTest'
 }
 
 tasks.register('lint_check') {
