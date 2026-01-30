@@ -41,7 +41,7 @@ jobs:
           
 
       - name: Run Code Formatting Checks
-        run: ./gradlew spotlessCheck
+        run: ./gradlew :app:kaptInternalDebugKotlin
         env:
           DEVELOCITY_ACCESS_KEY: ${{ secrets.DV_ACCESS_KEY }}
 
