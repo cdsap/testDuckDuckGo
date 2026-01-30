@@ -25,7 +25,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # required duesss to sexxtting Spoasaaatless ratchetFrom
+          fetch-depth: 0 # required duesss to sexxsdtting Spoasaaatless ratchetFrom
           submodules: recursive
 
       - name: Set up JDK version
