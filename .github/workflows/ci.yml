@@ -37,8 +37,8 @@ jobs:
       - name: Processs Watcher 
         uses: cdsap/build-process-watcher@main
         with:
-            remote_monitoring: true
-            collect_gc: true   
+            remote_monitoring: false
+          
 
       - name: Run Code Formatting Checks
         run: ./gradlew spotlessCheck
@@ -141,8 +141,8 @@ jobs:
       - name: Processs Watcher 
         uses: cdsap/build-process-watcher@main
         with:
-            remote_monitoring: true
-            collect_gc: true   
+            remote_monitoring: false
+            
 
       - name: Set up JDK1 version
         uses: actions/setup-java@v4
@@ -189,9 +189,8 @@ jobs:
       - name: Processs Watcher 
         uses: cdsap/build-process-watcher@main
         with:
-            remote_monitoring: true
-            collect_gc: true   
-
+            remote_monitoring: false
+       
       - name: Set up JDK1 version
         uses: actions/setup-java@v4
         with:
