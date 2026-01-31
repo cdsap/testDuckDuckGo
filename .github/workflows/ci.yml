@@ -35,7 +35,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Processs Watcher 
-        uses: cdsap/build-process-watcher@main
+        uses: cdsap/build-process-watcher@v0.5.0
         with:
             remote_monitoring: false
           
@@ -96,7 +96,7 @@ jobs:
           go-version: '1.18.3'
 
       - name: Processs Watcher 
-        uses: cdsap/build-process-watcher@main
+        uses: cdsap/build-process-watcher@v0.5.0
         with:
             remote_monitoring: true
             collect_gc: true   
