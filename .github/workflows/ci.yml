@@ -35,7 +35,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Processs Watcher 
-        uses: cdsap/build-process-watcher@v0.5.1
+        uses: cdsap/build-process-watcher@main
         with:
             remote_monitoring: true
           
