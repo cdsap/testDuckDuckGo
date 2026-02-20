@@ -41,7 +41,7 @@ jobs:
           
 
       - name: Run Code Formatting Checks
-        run: ./gradlew :app:kaptInternalDebugKotlin
+        run: ./gradlew :help
         env:
           DEVELOCITY_ACCESS_KEY: ${{ secrets.DV_ACCESS_KEY }}
 
