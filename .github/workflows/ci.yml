@@ -38,6 +38,7 @@ jobs:
         uses: cdsap/build-process-watcher@main
         with:
             remote_monitoring: true
+            debug: true
           
 
       - name: Run Code Formatting Checks
