@@ -35,10 +35,11 @@ jobs:
           distribution: 'adopt'
 
       - name: Processs Watcher 
-        uses: cdsap/build-process-watcher@unifying_logic
+        uses: cdsap/build-process-watcher@main
         with:
             remote_monitoring: true
             debug: true
+            disable_summary_output: true
           
 
       - name: Run Code Formatting Checks
@@ -63,9 +64,10 @@ jobs:
           distribution: 'adopt'
 
       - name: Processs Watcher 
-        uses: cdsap/build-process-watcher@unifying_logic
+        uses: cdsap/build-process-watcher@main
         with:
             remote_monitoring: true
+            disable_summary_output: true
 
 
       - name: JVM tests
@@ -96,7 +98,7 @@ jobs:
           go-version: '1.18.3'
 
       - name: Processs Watcher 
-        uses: cdsap/build-process-watcher@unifying_logic
+        uses: cdsap/build-process-watcher@main
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v5
@@ -136,9 +138,10 @@ jobs:
           force: true
 
       - name: Processs Watcher 
-        uses: cdsap/build-process-watcher@unifying_logic
+        uses: cdsap/build-process-watcher@main
         with:
           debug: true
+          disable_summary_output: true
             
 
       - name: Set up JDK1 version
