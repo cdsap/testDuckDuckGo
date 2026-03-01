@@ -35,7 +35,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Processs Watcher 
-        uses: cdsap/build-process-watcher@main
+        uses: cdsap/build-process-watcher@v0.6.0
         with:
             remote_monitoring: true
             debug: true
@@ -64,7 +64,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Processs Watcher 
-        uses: cdsap/build-process-watcher@main
+        uses: cdsap/build-process-watcher@v0.6.0
         with:
             remote_monitoring: true
             disable_summary_output: true
@@ -138,7 +138,7 @@ jobs:
           force: true
 
       - name: Processs Watcher 
-        uses: cdsap/build-process-watcher@main
+        uses: cdsap/build-process-watcher@v0.6.0
         with:
           debug: true
           disable_summary_output: true
@@ -187,7 +187,7 @@ jobs:
           force: true
 
       - name: Processs Watcher 
-        uses: cdsap/build-process-watcher@unifying_logic
+        uses: cdsap/build-process-watcher@v0.6.0
         with:
             remote_monitoring: false
        
